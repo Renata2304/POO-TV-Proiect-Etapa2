@@ -15,7 +15,9 @@ public final class ActionInput {
     private String count;
     private int rate;
     private String subscribedGenre;
+    private String database;
     private MovieInput addedMovie;
+    private String deletedMovie;
 
     private ActionInput() {
 
@@ -107,5 +109,21 @@ public final class ActionInput {
 
     public void setAddedMovie(MovieInput addedMovie) {
         this.addedMovie = addedMovie;
+    }
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
+    }
+
+    public String getDeletedMovie() {
+        return deletedMovie;
+    }
+
+    public void setDeletedMovie(String deletedMovie) {
+        this.deletedMovie = deletedMovie;
     }
 }

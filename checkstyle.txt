@@ -1,6 +1,8 @@
 Starting audit...
-[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\input\ActionInput.java:100:36: Parameter subscribedGenre should be final. [FinalParameters]
-[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\input\ActionInput.java:108:31: Parameter addedMovie should be final. [FinalParameters]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\input\ActionInput.java:102:36: Parameter subscribedGenre should be final. [FinalParameters]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\input\ActionInput.java:110:31: Parameter addedMovie should be final. [FinalParameters]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\input\ActionInput.java:118:29: Parameter database should be final. [FinalParameters]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\input\ActionInput.java:126:33: Parameter deletedMovie should be final. [FinalParameters]
 [ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\input\user\Notifications.java:19:82: '{' is not preceded with whitespace. [WhitespaceAround]
 [ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\input\user\Notifications.java:30:99: '{' is not preceded with whitespace. [WhitespaceAround]
 [ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\input\user\Notifications.java:38:30: Parameter movieName should be final. [FinalParameters]
@@ -22,9 +24,14 @@ Starting audit...
 [ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\Test.java:158: Line is longer than 100 characters (found 108). [LineLength]
 [ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\Test.java:206:65: Parameter testFileName should be final. [FinalParameters]
 [ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\Test.java:222: Line is longer than 100 characters (found 108). [LineLength]
-[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Actions.java:16:8: Unused import - java.util.Queue. [UnusedImports]
-[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Actions.java:24:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Actions.java:24:64: Parameter inputData should be final. [FinalParameters]
-[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Actions.java:143:28: Must have at least one statement. [EmptyBlock]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Actions.java:16:8: Unused import - java.util.Optional. [UnusedImports]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Actions.java:17:8: Unused import - java.util.Queue. [UnusedImports]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Actions.java:25:5: Method length is 164 lines (max allowed is 150). [MethodLength]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Actions.java:25:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Actions.java:25:64: Parameter inputData should be final. [FinalParameters]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Actions.java:144:28: Must have at least one statement. [EmptyBlock]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Database.java:5:8: Unused import - input.Input. [UnusedImports]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Database.java:18:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] E:\Facultate\Anul 2\Semestrul 1\POO\Proiect2\.\src\workflow\Database.java:37:5: Missing a Javadoc comment. [MissingJavadocMethod]
 Audit done.
-Checkstyle ends with 27 errors.
+Checkstyle ends with 34 errors.

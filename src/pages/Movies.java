@@ -128,7 +128,7 @@ public final class Movies extends Page {
      */
     public void onPageWatch(final ObjectMapper objectMapper, final ArrayNode output,
                             final UserInput crtUser) {
-        // if the movie hasn't been burchased, an error will be displayed
+        // if the movie hasn't been purchased, an error will be displayed
         if (!crtUser.getPurchasedMovies().contains(crtUser.getCurrentMovie())) {
             OutPrint.printError(output);
         } else {
@@ -155,8 +155,10 @@ public final class Movies extends Page {
         } else if (!crtUser.getCurrentMovie().isWatched()) {
             OutPrint.printError(output);
         } else {
-            // adding the movie to the liked list
-            crtUser.getLikedMovies().add(crtUser.getCurrentMovie());
+            if (!crtUser.getLikedMovies().contains(crtUser.getCurrentMovie())) {
+                // adding the movie to the liked list
+                crtUser.getLikedMovies().add(crtUser.getCurrentMovie());
+            }
             crtUser.getCurrentMovie().
                     setNumLikes(crtUser.getCurrentMovie().getNumLikes() + 1);
             // printing the parameters
@@ -181,8 +183,10 @@ public final class Movies extends Page {
         } else if (action.getRate() > Const.MAX_RATING) {
             OutPrint.printError(output); // if the user gives a rating over 5
         } else {
-            // adding the movie to the rated list
-            crtUser.getRatedMovies().add(crtUser.getCurrentMovie());
+            if (!crtUser.getRatedMovies().contains(crtUser.getCurrentMovie())) {
+                // adding the movie to the rated list
+                crtUser.getRatedMovies().add(crtUser.getCurrentMovie());
+            }
             // increasing the number of ratings given to the movie
             crtUser.getCurrentMovie().setNumRatings(crtUser.
                     getCurrentMovie().getNumRatings() + 1);

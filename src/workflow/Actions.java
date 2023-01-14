@@ -13,6 +13,7 @@ import pages.Upgrades;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Queue;
 
 public final class Actions {
@@ -149,7 +150,36 @@ public final class Actions {
                     }
                 }
                 case "database" -> {
-                    inputData.getMovies().add(action.getAddedMovie());
+                    switch (action.getFeature()) {
+                        case "add" -> {
+                            if (inputData.getMovies().contains(action.getAddedMovie())) {
+                                OutPrint.printError(output);
+                            } else {
+                                inputData.getMovies().add(action.getAddedMovie());
+                            }
+                        }
+                        case "delete" -> {
+                            int poz = 0, ok = 0;
+                            for (MovieInput movie : inputData.getMovies()) {
+                                if (Objects.equals(movie.getName(), action.getDeletedMovie())) {
+                                    ok = 1;
+                                    break;
+                                }
+                                poz++;
+                            }
+                            if (ok == 0) {
+                                OutPrint.printError(output);
+                            } else {
+                                inputData.getMovies().remove(poz);
+                                Database.notifyDelete(action, inputData.getUsers());
+                            }
+                        }
+                        default -> {
+
+                        }
+
+                    }
+
                 }
                 default -> {
 

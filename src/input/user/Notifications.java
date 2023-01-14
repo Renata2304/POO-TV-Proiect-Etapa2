@@ -7,7 +7,7 @@ public final class Notifications {
     private String movieName;
     private String message;
 
-    private Notifications() {
+    public Notifications() {
 
     }
 
@@ -27,7 +27,7 @@ public final class Notifications {
      * @param arrayList
      * @param elem
      */
-    public static void dequeue(final ArrayList<Notifications> arrayList, final Notifications elem){
+    public static void enqueue(final ArrayList<Notifications> arrayList, final Notifications elem){
         arrayList.add(elem);
     }
 
