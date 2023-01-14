@@ -35,7 +35,8 @@ public final class SeeDetails extends Page {
      */
     public void changePageSeeDetails(final ArrayNode output, final ObjectMapper objectMapper,
                                     final UserInput crtUser, final ArrayList<MovieInput> crtMovies,
-                                    final ActionInput action, final Page crtPage) {
+                                    final ActionInput action, final Page crtPage,
+                                    final ArrayList<String> stack) {
         boolean ok = false;
         // searching for the desired movie
         for (MovieInput movie : crtMovies) {
@@ -49,6 +50,7 @@ public final class SeeDetails extends Page {
             OutPrint.printError(output); // the movie wasn't found
         } else {
             crtPage.setPageType("see details");
+            PageStack.push(stack, "see details");
             ArrayList<MovieInput> currentMovie = new ArrayList<>();
             currentMovie.add(crtUser.getCurrentMovie());
             // printing the parameters

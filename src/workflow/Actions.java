@@ -21,7 +21,7 @@ public final class Actions {
 
     }
 
-    public static void action(final ObjectMapper objectMapper, final Input inputData,
+    public static void action(final ObjectMapper objectMapper, Input inputData,
                               final ArrayNode output) {
         Page crtPage = new Page();
         crtPage.setPageType("homepage neautentificat");
@@ -93,6 +93,9 @@ public final class Actions {
                             pages.Movies.getMovies().onPageRate(objectMapper, output,
                                     action, crtUser);
                         }
+                        case "subscribedGenre" -> {
+
+                        }
                         default -> {
                         }
                     }
@@ -119,14 +122,15 @@ public final class Actions {
                             }
                             case "movies" -> {
                                 crtMovies = pages.Movies.getMovies().changePageMovie(objectMapper,
-                                        output, crtPage, crtUser, inputData);
+                                        output, crtPage, crtUser, inputData, stack);
                             }
                             case "see details" -> {
                                 pages.SeeDetails.getSeeDetails().changePageSeeDetails(output,
-                                        objectMapper, crtUser, crtMovies, action, crtPage);
+                                        objectMapper, crtUser, crtMovies, action, crtPage, stack);
                             }
                             case "upgrades" -> {
                                 crtPage.setPageType("upgrades");
+                                PageStack.push(stack, "upgrades");
                             }
                             default -> {
                             }
@@ -137,16 +141,15 @@ public final class Actions {
                     if (stack.isEmpty()) {
                         OutPrint.printError(output);
                     } else {
-                        switch (crtPage.getPageType()) {
-                            case "register", "login" -> {
-                                OutPrint.printError(output);
-                            }
-                            default -> {
-
-                            }
-
-                        }
+//                        switch (crtPage.getPageType()) {
+//                            default -> {
+//
+//                            }
+//                        }
                     }
+                }
+                case "database" -> {
+                    inputData.getMovies().add(action.getAddedMovie());
                 }
                 default -> {
 

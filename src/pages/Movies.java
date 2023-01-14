@@ -38,8 +38,10 @@ public final class Movies extends Page {
      */
     public ArrayList<MovieInput> changePageMovie(final ObjectMapper objectMapper,
                                                  final ArrayNode output, final Page crtPage,
-                                                 final UserInput crtUser, final Input inputData) {
+                                                 final UserInput crtUser, final Input inputData,
+                                                 final ArrayList<String> stack) {
         crtPage.setPageType("movies"); // changing the page type
+        PageStack.push(stack, "movies");
         ArrayList<MovieInput> crtMovies = new ArrayList<>();
         // going through all the movies and adding those that aren't banned in the user's country
         for (MovieInput movie : inputData.getMovies()) {
