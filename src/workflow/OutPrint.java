@@ -27,6 +27,14 @@ public final class OutPrint {
         OutPrint.printCurrentUser(objectMapper, crtUser, outputNode);
     }
 
+    public static void printNoErrorNotif(final ObjectMapper objectMapper, final ArrayNode output,
+                                    final UserInput crtUser) {
+        ObjectNode outputNode = output.addObject();
+        outputNode.putPOJO("error", null);
+        outputNode.putPOJO("currentMoviesList", null);
+        OutPrint.printCurrentUser(objectMapper, crtUser, outputNode);
+    }
+
     /**
      * Prints the current user's fields.
      */
@@ -72,7 +80,7 @@ public final class OutPrint {
             }
         }
         ArrayNode notifications = currentUsers.putArray("notifications");
-        if (user.getRatedMovies() != null) {
+        if (user.getNotifications() != null) {
             for (Notifications notif : user.getNotifications()) {
                 printNotifications(notif, notifications);
             }
@@ -91,11 +99,13 @@ public final class OutPrint {
         movieNode.put("duration", movie.getDuration());
         movieNode.put("numLikes", movie.getNumLikes());
         // different printing, based on the rating number
-        if (movie.getNumRatings() != 0) {
-            movieNode.put("rating", movie.getRating() / movie.getNumRatings());
-        } else {
-            movieNode.put("rating", movie.getRating());
-        }
+        // TODO
+//        if (movie.getNumRatings() != 0) {
+//            movieNode.put("rating", movie.getRating() / movie.getNumRatings());
+//        } else {
+//            movieNode.put("rating", movie.getRating());
+//        }
+        movieNode.put("rating", movie.getRating());
         movieNode.put("numRatings", movie.getNumRatings());
 
         ArrayNode genresNode = movieNode.putArray("genres");

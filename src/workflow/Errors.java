@@ -45,7 +45,7 @@ public final class Errors {
     }
 
     /**
-     * Checking to see if there are any errors that can prvent the user from applying a fearture
+     * Checking to see if there are any errors that can prevent the user from applying a feature
      * during the on page action.
      * @return true -> no error occurred / false -> an error occurred
      */

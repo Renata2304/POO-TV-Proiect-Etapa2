@@ -4,6 +4,7 @@ import input.ActionInput;
 import input.Const;
 import input.Input;
 import input.MovieInput;
+import input.user.Notifications;
 import input.user.UserInput;
 import pages.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,26 +64,7 @@ public final class Actions {
                             Upgrades.getUpgrades().onPageBuyPremium(output, crtUser);
                         }
                         case "purchase" -> {
-                            if (Objects.equals(crtUser.getCredentials().getAccountType(),
-                                                "premium")) {
-                                if (crtUser.getNumFreePremiumMovies() > 0) {
-                                    crtUser.setNumFreePremiumMovies(crtUser.
-                                            getNumFreePremiumMovies() - 1);
-                                } else {
-                                    crtUser.setTokenCount(crtUser.getTokenCount()
-                                            - Const.NO_TOKENS_MOVIE);
-                                }
-                            } else {
-                                crtUser.setTokenCount(crtUser.getTokenCount()
-                                        - Const.NO_TOKENS_MOVIE);
-                            }
-                            crtUser.getCurrentMovie().setPurchased(true);
-                            crtUser.getPurchasedMovies().add(crtUser.getCurrentMovie());
-
-                            ArrayList<MovieInput> currentMovie = new ArrayList<>();
-                            currentMovie.add(crtUser.getCurrentMovie());
-
-                            OutPrint.printNoError(objectMapper, output, crtUser, currentMovie);
+                            pages.Movies.getMovies().onPagePurchase(objectMapper, output, crtUser);
                         }
                         case "watch" -> {
                             pages.Movies.getMovies().onPageWatch(objectMapper, output, crtUser);
@@ -139,14 +121,15 @@ public final class Actions {
                     }
                 }
                 case "back" -> {
-                    if (stack.isEmpty()) {
+                    if (stack.isEmpty()
+                            || crtPage.getPageType().equals("homepage neautentificat")) {
                         OutPrint.printError(output);
                     } else {
-//                        switch (crtPage.getPageType()) {
-//                            default -> {
-//
-//                            }
-//                        }
+                        if (crtPage.getPageType().equals("see details")) {
+                            crtMovies = pages.Movies.getMovies().changePageMovie(objectMapper,
+                                output, crtPage, crtUser, inputData, stack);
+                        }
+                        crtPage.setPageType(PageStack.pop(stack));
                     }
                 }
                 case "database" -> {
@@ -156,34 +139,56 @@ public final class Actions {
                                 OutPrint.printError(output);
                             } else {
                                 inputData.getMovies().add(action.getAddedMovie());
+//                                Database.notifyAdd(action, inputData.getUsers());
                             }
                         }
                         case "delete" -> {
-                            int poz = 0, ok = 0;
-                            for (MovieInput movie : inputData.getMovies()) {
-                                if (Objects.equals(movie.getName(), action.getDeletedMovie())) {
-                                    ok = 1;
-                                    break;
-                                }
-                                poz++;
-                            }
-                            if (ok == 0) {
+//                            boolean ok = false;
+//                            int poz = 0;
+//                            for (MovieInput movie : inputData.getMovies()) {
+//                                if (movie.getName().equals(action.getDeletedMovie())) {
+//                                    ok = true;
+//                                    break;
+//                                }
+//                                poz = poz + 1;
+//                            }
+//                            if (!ok) {
+                            if (inputData.getMovies().stream().map(MovieInput::getName).
+                                    noneMatch(name-> name.equals(action.getDeletedMovie()))) {
                                 OutPrint.printError(output);
                             } else {
-                                inputData.getMovies().remove(poz);
+                                inputData.getMovies().removeIf(movie -> movie.getName()
+                                                .equals(action.getDeletedMovie()));
+//                                crtUser.getPurchasedMovies().removeIf(movie -> movie.getName()
+//                                        .equals(action.getDeletedMovie()));
+//                                crtUser.getLikedMovies().removeIf(movie -> movie.getName()
+//                                        .equals(action.getDeletedMovie()));
+//                                crtUser.getWatchedMovies().removeIf(movie -> movie.getName()
+//                                        .equals(action.getDeletedMovie()));
+//                                crtUser.getRatedMovies().removeIf(movie -> movie.getName()
+//                                        .equals(action.getDeletedMovie()));
+                                crtMovies.removeIf(movie -> movie.getName()
+                                        .equals(action.getDeletedMovie()));
+                                Database.deleteMovieFromUser(inputData, crtUser, action);
                                 Database.notifyDelete(action, inputData.getUsers());
                             }
                         }
                         default -> {
-
                         }
-
                     }
-
                 }
                 default -> {
-
                 }
+            }
+        }
+        if (crtUser.getCredentials().getAccountType().equals("premium")) {
+            if (crtUser.getLikedMovies().isEmpty()) {
+                Notifications notifications = new Notifications();
+                notifications.setMessage("Recommendation");
+                notifications.setMovieName("No recommendation");
+                Notifications.enqueue(crtUser.getNotifications(), notifications);
+
+                OutPrint.printNoErrorNotif(objectMapper, output, crtUser);
             }
         }
     }

@@ -10,6 +10,7 @@ public final class MovieInput {
     private ArrayList<String> actors;
     private ArrayList<String> countriesBanned;
     private int numLikes;
+    private double ratingSum;
     private double rating;
     private int numRatings;
     private boolean isPurchased;
@@ -77,6 +78,14 @@ public final class MovieInput {
 
     public void setRating(final double rating) {
         this.rating = rating;
+    }
+
+    public double getRatingSum() {
+        return ratingSum;
+    }
+
+    public void setRatingSum(double ratingSum) {
+        this.ratingSum = ratingSum;
     }
 
     public int getNumRatings() {

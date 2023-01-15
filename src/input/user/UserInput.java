@@ -16,6 +16,7 @@ public final class UserInput {
     private ArrayList<MovieInput> ratedMovies = new ArrayList<>();
     private MovieInput currentMovie = new MovieInput();
     private ArrayList<Notifications> notifications = new ArrayList<>();
+    private ArrayList<String> subscribedGenres = new ArrayList<>();
 
     public UserInput() {
 
@@ -95,5 +96,13 @@ public final class UserInput {
 
     public void setNotifications(ArrayList<Notifications> notifications) {
         this.notifications = notifications;
+    }
+
+    public ArrayList<String> getSubscribedGenres() {
+        return subscribedGenres;
+    }
+
+    public void setSubscribedGenres(ArrayList<String> subscribedGenres) {
+        this.subscribedGenres = subscribedGenres;
     }
 }

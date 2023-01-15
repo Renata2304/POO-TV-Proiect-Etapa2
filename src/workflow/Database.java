@@ -28,13 +28,39 @@ public final class Database {
                     notifications.setMessage("DELETE");
                     notifications.setMovieName(action.getDeletedMovie());
                     Notifications.enqueue(crtUser.getNotifications(), notifications);
+
                     break;
                 }
             }
         }
     }
 
-    public static void notifyAdd() {
+    public static void deleteMovieFromUser(final Input inputData, final UserInput currentUser,
+                                           final ActionInput action) {
+        inputData.getMovies().removeIf(movie -> movie.getName()
+                .equals(action.getDeletedMovie()));
+        currentUser.getPurchasedMovies().removeIf(movie -> movie.getName()
+                .equals(action.getDeletedMovie()));
+        currentUser.getLikedMovies().removeIf(movie -> movie.getName()
+                .equals(action.getDeletedMovie()));
+        currentUser.getWatchedMovies().removeIf(movie -> movie.getName()
+                .equals(action.getDeletedMovie()));
+        currentUser.getRatedMovies().removeIf(movie -> movie.getName()
+                .equals(action.getDeletedMovie()));
+    }
 
+    public static void notifyAdd(final ActionInput action, final ArrayList<UserInput> users) {
+        for (UserInput crtUser : users) {
+            for (int i = 0; i <action.getAddedMovie().getGenres().size(); i++ ) {
+                if (crtUser.getSubscribedGenres()
+                        .contains(action.getAddedMovie().getGenres().get(i))) {
+                    Notifications notifications = new Notifications();
+                    notifications.setMessage("ADD");
+                    notifications.setMovieName(action.getAddedMovie().getName());
+                    Notifications.enqueue(crtUser.getNotifications(), notifications);
+                    break;
+                }
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ import workflow.OutPrint;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Objects;
 
 public final class Movies extends Page {
     private static Movies instance = null;
@@ -120,6 +121,27 @@ public final class Movies extends Page {
         // returning the list of movies after the filters have been applied
         return crtMovies;
     }
+    public void onPagePurchase(final ObjectMapper objectMapper, final ArrayNode output,
+                               final UserInput crtUser) {
+        if (crtUser.getPurchasedMovies().contains(crtUser.getCurrentMovie())) {
+            OutPrint.printError(output);
+            return;
+        }
+
+        if (Objects.equals(crtUser.getCredentials().getAccountType(),
+                "premium") && crtUser.getNumFreePremiumMovies() > 0) {
+            crtUser.setNumFreePremiumMovies(crtUser.getNumFreePremiumMovies() - 1);
+        } else {
+            crtUser.setTokenCount(crtUser.getTokenCount() - Const.NO_TOKENS_MOVIE);
+        }
+        crtUser.getCurrentMovie().setPurchased(true);
+        crtUser.getPurchasedMovies().add(crtUser.getCurrentMovie());
+
+        ArrayList<MovieInput> currentMovie = new ArrayList<>();
+        currentMovie.add(crtUser.getCurrentMovie());
+
+        OutPrint.printNoError(objectMapper, output, crtUser, currentMovie);
+    }
 
     /**
      * Function used for the on page -> watch case. If the movie isn't purchased, an error will
@@ -132,9 +154,12 @@ public final class Movies extends Page {
         if (!crtUser.getPurchasedMovies().contains(crtUser.getCurrentMovie())) {
             OutPrint.printError(output);
         } else {
-            // the movie will be added to the watched movies list
-            crtUser.getWatchedMovies().add(crtUser.getCurrentMovie());
-            crtUser.getCurrentMovie().setWatched(true);
+            if (!crtUser.getWatchedMovies().contains(crtUser.getCurrentMovie())) {
+                // the movie will be added to the watched movies list
+                crtUser.getWatchedMovies().add(crtUser.getCurrentMovie());
+                crtUser.getCurrentMovie().setWatched(true);
+            }
+
             // printing the parameters
             ArrayList<MovieInput> currentMovie = new ArrayList<>();
             currentMovie.add(crtUser.getCurrentMovie());
@@ -178,25 +203,37 @@ public final class Movies extends Page {
         // if the movie isn't purchased or watched -> error
         if (!crtUser.getPurchasedMovies().contains(crtUser.getCurrentMovie())) {
             OutPrint.printError(output);
-        } else if (!crtUser.getWatchedMovies().contains(crtUser.getCurrentMovie())) {
-            OutPrint.printError(output);
-        } else if (action.getRate() > Const.MAX_RATING) {
-            OutPrint.printError(output); // if the user gives a rating over 5
-        } else {
-            if (!crtUser.getRatedMovies().contains(crtUser.getCurrentMovie())) {
-                // adding the movie to the rated list
-                crtUser.getRatedMovies().add(crtUser.getCurrentMovie());
-            }
-            // increasing the number of ratings given to the movie
-            crtUser.getCurrentMovie().setNumRatings(crtUser.
-                    getCurrentMovie().getNumRatings() + 1);
-            crtUser.getCurrentMovie().setRating(crtUser.
-                    getCurrentMovie().getRating() + action.getRate());
-            // printing the parameters
-            ArrayList<MovieInput> currentMovie = new ArrayList<>();
-            currentMovie.add(crtUser.getCurrentMovie());
-            OutPrint.printNoError(objectMapper, output, crtUser, currentMovie);
+            return;
         }
+        if (!crtUser.getWatchedMovies().contains(crtUser.getCurrentMovie())) {
+            OutPrint.printError(output);
+            return;
+        }
+        if (action.getRate() > Const.MAX_RATING) {
+            OutPrint.printError(output); // if the user gives a rating over 5
+            return;
+        }
+        // increasing the number of ratings given to the movie
+        crtUser.getCurrentMovie().setNumRatings(crtUser.
+                getCurrentMovie().getNumRatings() + 1);
+        crtUser.getCurrentMovie().setRatingSum(crtUser.
+                getCurrentMovie().getRatingSum() + action.getRate());
+        double rating = crtUser.getCurrentMovie().getRatingSum();
+        rating = rating / crtUser.getCurrentMovie().getNumRatings();
+        crtUser.getCurrentMovie().setRating(rating);
+
+        if (!crtUser.getRatedMovies().contains(crtUser.getCurrentMovie())) {
+            // adding the movie to the rated list
+            crtUser.getRatedMovies().add(crtUser.getCurrentMovie());
+        } else {
+            crtUser.getCurrentMovie().setNumRatings(crtUser
+                    .getCurrentMovie().getNumRatings() - 1);
+        }
+
+        // printing the parameters
+        ArrayList<MovieInput> currentMovie = new ArrayList<>();
+        currentMovie.add(crtUser.getCurrentMovie());
+        OutPrint.printNoError(objectMapper, output, crtUser, currentMovie);
     }
 
     /**
