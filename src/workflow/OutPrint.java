@@ -27,6 +27,10 @@ public final class OutPrint {
         OutPrint.printCurrentUser(objectMapper, crtUser, outputNode);
     }
 
+    /**
+     * Prints all the parameters at the end of the action iteration, printing the
+     * notification if the case occurs
+     */
     public static void printNoErrorNotif(final ObjectMapper objectMapper, final ArrayNode output,
                                     final UserInput crtUser) {
         ObjectNode outputNode = output.addObject();
@@ -99,12 +103,6 @@ public final class OutPrint {
         movieNode.put("duration", movie.getDuration());
         movieNode.put("numLikes", movie.getNumLikes());
         // different printing, based on the rating number
-        // TODO
-//        if (movie.getNumRatings() != 0) {
-//            movieNode.put("rating", movie.getRating() / movie.getNumRatings());
-//        } else {
-//            movieNode.put("rating", movie.getRating());
-//        }
         movieNode.put("rating", movie.getRating());
         movieNode.put("numRatings", movie.getNumRatings());
 

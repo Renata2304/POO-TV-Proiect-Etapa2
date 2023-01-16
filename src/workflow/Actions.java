@@ -1,7 +1,6 @@
 package workflow;
 
 import input.ActionInput;
-import input.Const;
 import input.Input;
 import input.MovieInput;
 import input.user.Notifications;
@@ -13,11 +12,6 @@ import pages.PageStack;
 import pages.Upgrades;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Queue;
 
 public final class Actions {
 
@@ -175,37 +169,17 @@ public final class Actions {
                 }
             }
         }
-        if (crtUser.getCredentials().getAccountType().equals("premium")) {
-            if (crtUser.getLikedMovies().isEmpty()) {
-                Notifications notifications = new Notifications();
-                notifications.setMessage("Recommendation");
-                notifications.setMovieName("No recommendation");
-                Notifications.enqueue(crtUser.getNotifications(), notifications);
+        if (!crtPage.getPageType().equals("homepage neautentificat")){
+            if (crtUser.getCredentials().getAccountType().equals("premium")) {
+                if (crtUser.getLikedMovies().isEmpty()) {
+                    Notifications notifications = new Notifications();
+                    notifications.setMessage("Recommendation");
+                    notifications.setMovieName("No recommendation");
+                    Notifications.enqueue(crtUser.getNotifications(), notifications);
 
-                OutPrint.printNoErrorNotif(objectMapper, output, crtUser);
-            } else {
-//                List<String> genres = Recomandations.sortGenres(crtUser);
-//                ArrayList<MovieInput> movies = inputData.getMovies();
-//                movies.stream().sorted(Comparator.comparing(MovieInput :: getNumLikes).reversed());
-//                boolean ok = false;
-//                for (String genre : genres) {
-//                    if (ok) {
-//                        break;
-//                    }
-//                    for (MovieInput movieInput : movies) {
-//                        if (movieInput.getGenres().contains(genre)
-//                        && !crtUser.getWatchedMovies().contains(movieInput)) {
-//                            Notifications notifications = new Notifications();
-//                            notifications.setMessage("Recommendation");
-//                            notifications.setMovieName(movieInput.getName());
-//                            Notifications.enqueue(crtUser.getNotifications(), notifications);
-//
-//                            OutPrint.printNoErrorNotif(objectMapper, output, crtUser);
-//                            ok = true;
-//                            break;
-//                        }
-//                    }
-//                }
+                    OutPrint.printNoErrorNotif(objectMapper, output, crtUser);
+                } else {
+                }
             }
         }
     }

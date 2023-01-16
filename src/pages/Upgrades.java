@@ -31,9 +31,9 @@ public final class Upgrades extends Page {
      * Function used for the on page -> buy tokens case.
      */
     public void onPageBuyTokens(final ActionInput action, final UserInput crtUser) {
+        crtUser.setTokenCount(crtUser.getTokenCount() + Integer.parseInt(action.getCount()));
         crtUser.getCredentials().setBalance(Integer.toString(Integer.parseInt(crtUser.
                 getCredentials().getBalance()) - Integer.parseInt(action.getCount())));
-        crtUser.setTokenCount(crtUser.getTokenCount() + Integer.parseInt(action.getCount()));
     }
 
     /**
