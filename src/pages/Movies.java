@@ -121,6 +121,14 @@ public final class Movies extends Page {
         // returning the list of movies after the filters have been applied
         return crtMovies;
     }
+
+    /**
+     * Function used for the on page -> purchase case. The program will test if the parameters
+     * are right and if they are, if the account is a premium one and has at least one more
+     * free premium movies, one premium movie will be subtracted, otherwise 2 tokens will be
+     * subtracted from the total of tokens. If the parameters are wrong, an error will be
+     * displayed.
+     */
     public void onPagePurchase(final ObjectMapper objectMapper, final ArrayNode output,
                                final UserInput crtUser) {
         if (crtUser.getPurchasedMovies().contains(crtUser.getCurrentMovie())) {

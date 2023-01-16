@@ -2,7 +2,6 @@ package pages;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import input.ActionInput;
 import input.MovieInput;
 import input.user.UserInput;
@@ -54,7 +53,7 @@ public final class SeeDetails extends Page {
             ArrayList<MovieInput> currentMovie = new ArrayList<>();
             currentMovie.add(crtUser.getCurrentMovie());
             // printing the parameters
-            OutPrint.printNoError(objectMapper, output, crtUser,currentMovie);
+            OutPrint.printNoError(objectMapper, output, crtUser, currentMovie);
         }
     }
 

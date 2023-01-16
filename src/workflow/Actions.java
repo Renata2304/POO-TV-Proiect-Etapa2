@@ -136,30 +136,10 @@ public final class Actions {
                 case "database" -> {
                     switch (action.getFeature()) {
                         case "add" -> {
-                            if (inputData.getMovies().stream().map(MovieInput::getName).
-                                    anyMatch(name-> name.equals(action.getAddedMovie().getName()))) {
-                                OutPrint.printError(output);
-                            } else {
-                                inputData.getMovies().add(action.getAddedMovie());
-                                Database.notifyAdd(action, inputData.getUsers());
-                                if (!action.getAddedMovie().getCountriesBanned()
-                                        .contains(crtUser.getCredentials().getCountry())) {
-                                    crtMovies.add(action.getAddedMovie());
-                                }
-                            }
+                            Database.addMovie(inputData, action, crtMovies, crtUser, output);
                         }
                         case "delete" -> {
-                            if (inputData.getMovies().stream().map(MovieInput::getName).
-                                    noneMatch(name-> name.equals(action.getDeletedMovie()))) {
-                                OutPrint.printError(output);
-                            } else {
-                                inputData.getMovies().removeIf(movie -> movie.getName()
-                                                .equals(action.getDeletedMovie()));
-                                crtMovies.removeIf(movie -> movie.getName()
-                                        .equals(action.getDeletedMovie()));
-                                Database.deleteMovieFromUser(inputData, crtUser, action);
-                                Database.notifyDelete(action, inputData.getUsers());
-                            }
+                            Database.deleteMovie(inputData, action, crtMovies, crtUser, output);
                         }
                         default -> {
                         }
@@ -169,7 +149,9 @@ public final class Actions {
                 }
             }
         }
-        if (!crtPage.getPageType().equals("homepage neautentificat")){
+        // if the current user isn't logged out of their account and if the account is a premium
+        // one, a recommendation will be delivered.
+        if (!crtPage.getPageType().equals("homepage neautentificat")) {
             if (crtUser.getCredentials().getAccountType().equals("premium")) {
                 if (crtUser.getLikedMovies().isEmpty()) {
                     Notifications notifications = new Notifications();
@@ -178,7 +160,6 @@ public final class Actions {
                     Notifications.enqueue(crtUser.getNotifications(), notifications);
 
                     OutPrint.printNoErrorNotif(objectMapper, output, crtUser);
-                } else {
                 }
             }
         }

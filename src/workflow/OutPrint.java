@@ -148,9 +148,7 @@ public final class OutPrint {
     }
 
     /**
-     * TODO
-     * @param notifications
-     * @param allNotificationsNode
+     * method used for printing a notification at the end of the action iteration
      */
     public static void printNotifications(final Notifications notifications,
                                           final ArrayNode allNotificationsNode) {

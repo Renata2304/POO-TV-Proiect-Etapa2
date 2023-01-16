@@ -10,22 +10,10 @@ public final class Notifications {
     public Notifications() {
 
     }
-//
-//    /**
-//     *
-//     * @param arrayList
-//     * @return
-//     */
-//    public static Notifications dequeue(final ArrayList<Notifications> arrayList){
-//        Notifications elem = arrayList.get(0);
-//        arrayList.remove(0);
-//        return elem;
-//    }
 
     /**
-     *
-     * @param arrayList
-     * @param elem
+     * Method used for the queue of notifications that will be used after the action iteration.
+     * Method will mimic the enqueue action of the queue, adding a new element.
      */
     public static void enqueue(final ArrayList<Notifications> arrayList,
                                final Notifications elem) {
