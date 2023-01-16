@@ -51,9 +51,11 @@ public final class Database {
 
     public static void notifyAdd(final ActionInput action, final ArrayList<UserInput> users) {
         for (UserInput crtUser : users) {
-            for (int i = 0; i <action.getAddedMovie().getGenres().size(); i++ ) {
+            for (int i = 0; i < action.getAddedMovie().getGenres().size(); i++ ) {
                 if (crtUser.getSubscribedGenres()
-                        .contains(action.getAddedMovie().getGenres().get(i))) {
+                        .contains(action.getAddedMovie().getGenres().get(i))
+                    && !action.getAddedMovie().getCountriesBanned()
+                        .contains(crtUser.getCredentials().getCountry())) {
                     Notifications notifications = new Notifications();
                     notifications.setMessage("ADD");
                     notifications.setMovieName(action.getAddedMovie().getName());

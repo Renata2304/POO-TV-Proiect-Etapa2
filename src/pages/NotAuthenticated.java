@@ -1,6 +1,6 @@
 package pages;
 
-public final class NotAuthenticated extends Page{
+public final class NotAuthenticated extends Page {
 
     private static NotAuthenticated instance = null;
 

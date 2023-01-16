@@ -84,7 +84,7 @@ public final class MovieInput {
         return ratingSum;
     }
 
-    public void setRatingSum(double ratingSum) {
+    public void setRatingSum(final double ratingSum) {
         this.ratingSum = ratingSum;
     }
 

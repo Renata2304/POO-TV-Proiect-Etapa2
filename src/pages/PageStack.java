@@ -1,9 +1,8 @@
 package pages;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
-public class PageStack extends Page {
+public final class PageStack extends Page {
 
     private PageStack() {
 
@@ -14,7 +13,7 @@ public class PageStack extends Page {
      * @param stack
      * @param elem
      */
-    public static void push(ArrayList<String> stack, final String elem) {
+    public static void push(final ArrayList<String> stack, final String elem) {
         stack.add(0, elem);
     }
 

@@ -10,24 +10,25 @@ public final class Notifications {
     public Notifications() {
 
     }
-
-    /**
-     *
-     * @param arrayList
-     * @return
-     */
-    public static Notifications dequeue(final ArrayList<Notifications> arrayList){
-        Notifications elem = arrayList.get(0);
-        arrayList.remove(0);
-        return elem;
-    }
+//
+//    /**
+//     *
+//     * @param arrayList
+//     * @return
+//     */
+//    public static Notifications dequeue(final ArrayList<Notifications> arrayList){
+//        Notifications elem = arrayList.get(0);
+//        arrayList.remove(0);
+//        return elem;
+//    }
 
     /**
      *
      * @param arrayList
      * @param elem
      */
-    public static void enqueue(final ArrayList<Notifications> arrayList, final Notifications elem){
+    public static void enqueue(final ArrayList<Notifications> arrayList,
+                               final Notifications elem) {
         arrayList.add(elem);
     }
 
@@ -35,7 +36,7 @@ public final class Notifications {
         return movieName;
     }
 
-    public void setMovieName(String movieName) {
+    public void setMovieName(final String movieName) {
         this.movieName = movieName;
     }
 
@@ -43,7 +44,7 @@ public final class Notifications {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         this.message = message;
     }
 }

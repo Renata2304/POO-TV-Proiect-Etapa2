@@ -4,7 +4,6 @@ import input.Const;
 import input.MovieInput;
 
 import java.util.ArrayList;
-import java.util.Queue;
 
 public final class UserInput {
     private Credentials credentials;
@@ -94,7 +93,7 @@ public final class UserInput {
         return notifications;
     }
 
-    public void setNotifications(ArrayList<Notifications> notifications) {
+    public void setNotifications(final ArrayList<Notifications> notifications) {
         this.notifications = notifications;
     }
 
@@ -102,7 +101,7 @@ public final class UserInput {
         return subscribedGenres;
     }
 
-    public void setSubscribedGenres(ArrayList<String> subscribedGenres) {
+    public void setSubscribedGenres(final ArrayList<String> subscribedGenres) {
         this.subscribedGenres = subscribedGenres;
     }
 }

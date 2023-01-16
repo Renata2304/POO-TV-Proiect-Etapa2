@@ -68,7 +68,8 @@ public final class Errors {
         if (currPage.equals("see details") && (Objects.equals(action.getFeature(), "purchase")
                 || Objects.equals(action.getFeature(), "watch")
                 || Objects.equals(action.getFeature(), "like")
-                || Objects.equals(action.getFeature(), "rate"))) {
+                || Objects.equals(action.getFeature(), "rate")
+                || Objects.equals(action.getFeature(), "subscribe"))) {
             return true;
         }
         return false;

@@ -13,6 +13,8 @@ import pages.PageStack;
 import pages.Upgrades;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Queue;
@@ -76,8 +78,13 @@ public final class Actions {
                             pages.Movies.getMovies().onPageRate(objectMapper, output,
                                     action, crtUser);
                         }
-                        case "subscribedGenre" -> {
-
+                        case "subscribe" -> {
+                            if (!crtUser.getCurrentMovie().getGenres()
+                                    .contains(action.getSubscribedGenre())) {
+                                OutPrint.printError(output);
+                            } else {
+                                crtUser.getSubscribedGenres().add(action.getSubscribedGenre());
+                            }
                         }
                         default -> {
                         }
@@ -135,38 +142,25 @@ public final class Actions {
                 case "database" -> {
                     switch (action.getFeature()) {
                         case "add" -> {
-                            if (inputData.getMovies().contains(action.getAddedMovie())) {
+                            if (inputData.getMovies().stream().map(MovieInput::getName).
+                                    anyMatch(name-> name.equals(action.getAddedMovie().getName()))) {
                                 OutPrint.printError(output);
                             } else {
                                 inputData.getMovies().add(action.getAddedMovie());
-//                                Database.notifyAdd(action, inputData.getUsers());
+                                Database.notifyAdd(action, inputData.getUsers());
+                                if (!action.getAddedMovie().getCountriesBanned()
+                                        .contains(crtUser.getCredentials().getCountry())) {
+                                    crtMovies.add(action.getAddedMovie());
+                                }
                             }
                         }
                         case "delete" -> {
-//                            boolean ok = false;
-//                            int poz = 0;
-//                            for (MovieInput movie : inputData.getMovies()) {
-//                                if (movie.getName().equals(action.getDeletedMovie())) {
-//                                    ok = true;
-//                                    break;
-//                                }
-//                                poz = poz + 1;
-//                            }
-//                            if (!ok) {
                             if (inputData.getMovies().stream().map(MovieInput::getName).
                                     noneMatch(name-> name.equals(action.getDeletedMovie()))) {
                                 OutPrint.printError(output);
                             } else {
                                 inputData.getMovies().removeIf(movie -> movie.getName()
                                                 .equals(action.getDeletedMovie()));
-//                                crtUser.getPurchasedMovies().removeIf(movie -> movie.getName()
-//                                        .equals(action.getDeletedMovie()));
-//                                crtUser.getLikedMovies().removeIf(movie -> movie.getName()
-//                                        .equals(action.getDeletedMovie()));
-//                                crtUser.getWatchedMovies().removeIf(movie -> movie.getName()
-//                                        .equals(action.getDeletedMovie()));
-//                                crtUser.getRatedMovies().removeIf(movie -> movie.getName()
-//                                        .equals(action.getDeletedMovie()));
                                 crtMovies.removeIf(movie -> movie.getName()
                                         .equals(action.getDeletedMovie()));
                                 Database.deleteMovieFromUser(inputData, crtUser, action);
@@ -189,6 +183,29 @@ public final class Actions {
                 Notifications.enqueue(crtUser.getNotifications(), notifications);
 
                 OutPrint.printNoErrorNotif(objectMapper, output, crtUser);
+            } else {
+//                List<String> genres = Recomandations.sortGenres(crtUser);
+//                ArrayList<MovieInput> movies = inputData.getMovies();
+//                movies.stream().sorted(Comparator.comparing(MovieInput :: getNumLikes).reversed());
+//                boolean ok = false;
+//                for (String genre : genres) {
+//                    if (ok) {
+//                        break;
+//                    }
+//                    for (MovieInput movieInput : movies) {
+//                        if (movieInput.getGenres().contains(genre)
+//                        && !crtUser.getWatchedMovies().contains(movieInput)) {
+//                            Notifications notifications = new Notifications();
+//                            notifications.setMessage("Recommendation");
+//                            notifications.setMovieName(movieInput.getName());
+//                            Notifications.enqueue(crtUser.getNotifications(), notifications);
+//
+//                            OutPrint.printNoErrorNotif(objectMapper, output, crtUser);
+//                            ok = true;
+//                            break;
+//                        }
+//                    }
+//                }
             }
         }
     }

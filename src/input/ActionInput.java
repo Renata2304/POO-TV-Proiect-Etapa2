@@ -99,7 +99,7 @@ public final class ActionInput {
         return subscribedGenre;
     }
 
-    public void setSubscribedGenre(String subscribedGenre) {
+    public void setSubscribedGenre(final String subscribedGenre) {
         this.subscribedGenre = subscribedGenre;
     }
 
@@ -107,7 +107,7 @@ public final class ActionInput {
         return addedMovie;
     }
 
-    public void setAddedMovie(MovieInput addedMovie) {
+    public void setAddedMovie(final MovieInput addedMovie) {
         this.addedMovie = addedMovie;
     }
 
@@ -115,7 +115,7 @@ public final class ActionInput {
         return database;
     }
 
-    public void setDatabase(String database) {
+    public void setDatabase(final String database) {
         this.database = database;
     }
 
@@ -123,7 +123,7 @@ public final class ActionInput {
         return deletedMovie;
     }
 
-    public void setDeletedMovie(String deletedMovie) {
+    public void setDeletedMovie(final String deletedMovie) {
         this.deletedMovie = deletedMovie;
     }
 }
